@@ -6,13 +6,15 @@
 (def gfx-env (GraphicsEnvironment/getLocalGraphicsEnvironment))
 (def gfx-device (.getDefaultScreenDevice gfx-env))
 (def gfx-config (.getDefaultConfiguration gfx-device))
-(def sprite (ImageIO/read (as-file "resources/player.png")))
+
 (def window
-  (proxy [JWindow] [gfx-config]
-    (paint [gfx]
-	   (.drawImage gfx
-		       (ImageIO/read (as-file "resources/player.png"))
-		       50 50 100 100 0 0 50 50 nil))))
+  (let [tiles (load-tiles "resources/player.png" 2 4)
+	pane (proxy [JPanel] [true]
+	       (paint [gfx]
+		      (.drawImage gfx
+				  (nth tiles (-> (System/currentTimeMillis) (rem 2400) (quot 300)))
+				  0 0 nil)))]
+    (doto (JWindow. gfx-config) (.add pane) (.setSize 640 480))))
 
 (defn draw-it []
   (.setFullScreenWindow gfx-device window)

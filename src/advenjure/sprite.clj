@@ -19,3 +19,6 @@
 	      x (-> x (+ cwid) (rem (.getWidth img)))
 	      y (if (zero? x) (+ y rht) y)]
 	  (recur x y (conj tiles tile)))))))
+
+(defn draw [img]
+  )
