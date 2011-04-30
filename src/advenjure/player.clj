@@ -19,3 +19,6 @@
       (.addMouseListener (proxy [MouseAdapter] []
                            (mouseClicked [ms-event]
                              (println "Inside the sprite!" (.getX ms-event) (.getY ms-event))))))))
+
+(defn set-coords! [x y]
+  (.setBounds component x y 41 39.25))
