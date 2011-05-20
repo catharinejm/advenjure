@@ -17,12 +17,16 @@
                          (let [x (.getX ms-event)
                                y (.getY ms-event)]
                           (println "x: " x "y: " y)
-                          (.setBounds player/component x y 41 39.25)))))
+                          (player/move-to x y)))))
   (.add player/component))
 
-(.setBounds player/component 400 300 41 39.25)
+(defn activate! []
+  (player/init)
+  (loop []
+    (Thread/sleep 1000/60) ;60 times per second
+    (player/update)
+    (.repaint frame)
+    (recur)))
 
-(loop []
-  (Thread/sleep 1000/60) ;60 times per second
-  (.repaint frame)
-  (recur))
+#_(.start (Thread. activate!))
+(activate!)
